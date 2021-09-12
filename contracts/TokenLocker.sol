@@ -16,7 +16,7 @@ contract TokenLocker is Ownable {
   uint256 public totalClaimed;
 
   event Claim(address indexed recipient, uint256 amount);
-  
+
   constructor(address _token, uint256 _duration, uint256 _totalSupply) {
     token = ERC20(_token);
     start = block.timestamp;
@@ -29,7 +29,7 @@ contract TokenLocker is Ownable {
     uint daysPassed = block.timestamp.sub(start).div(1 days);
 
     if (daysPassed >= duration) {
-      return totalSupply.sub(totalClaimed);
+      return token.balanceOf(address(this));
     } else {
       uint256 amountPerDay = totalSupply.div(duration);
       return amountPerDay.mul(daysPassed).sub(totalClaimed);

@@ -39,16 +39,17 @@ contract('TokenLocker', (accounts) => {
       await setTime(time + 60 * 60 * 24 * 1500);
       expect((await contract.getClaimableAmount()).toString()).to.eq(convertToAmount(750));
 
-      // 2000 days
-      await setTime(time + 60 * 60 * 24 * 2000);
-      expect((await contract.getClaimableAmount()).toString()).to.eq(convertToAmount(900));
-
       await setTime(time + 60 * 60 * 24 * 100);
       await contract.claim(convertToAmount(30));
       expect((await contract.getClaimableAmount()).toString()).to.eq(convertToAmount(20));
 
       await setTime(time + 60 * 60 * 24 * 1500);
       expect((await contract.getClaimableAmount()).toString()).to.eq(convertToAmount(720));
+
+      // 2000 days - whole amount
+      await setTime(time + 60 * 60 * 24 * 2000);
+      const tokenBalance = await token.balanceOf(contract.address);
+      expect((await contract.getClaimableAmount()).toString()).to.eq(tokenBalance.toString());
     });
   });
 
