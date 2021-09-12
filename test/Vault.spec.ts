@@ -1,6 +1,6 @@
-import { ERC20Instance, TokenLockerInstance } from '../types/truffle-contracts';
+import { ERC20Instance, RynoLockerInstance } from '../types/truffle-contracts';
 
-const TokenLocker = artifacts.require('TokenLocker');
+const RynoLocker = artifacts.require('RynoLocker');
 const TestToken = artifacts.require('TestToken');
 const toBN = web3.utils.toBN;
 
@@ -13,14 +13,14 @@ async function setTime(time: number) {
   return new Promise(resolve => provider.send({ method: "evm_mine", params: [time] }, resolve));
 }
 
-contract('TokenLocker', (accounts) => {
-  let contract: TokenLockerInstance;
+contract('RynoLocker', (accounts) => {
+  let contract: RynoLockerInstance;
   let token: ERC20Instance;
   let time: number;
 
   beforeEach(async () => {
     token = await TestToken.new();
-    contract = await TokenLocker.new(token.address, 1800, 900);
+    contract = await RynoLocker.new(token.address, 1800, 900);
     time = (await contract.start()).toNumber();
     await token.transfer(contract.address, await token.totalSupply());
   });

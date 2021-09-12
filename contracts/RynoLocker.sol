@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenLocker is Ownable {
+contract RynoLocker is Ownable {
   using SafeMath for uint256;
 
   ERC20 public token;
